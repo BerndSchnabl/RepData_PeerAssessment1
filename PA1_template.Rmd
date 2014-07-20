@@ -1,5 +1,6 @@
 # Reproducible Research: Peer Assessment 1
-
+In this assignment, the data from activity trackers is analyzed and documented
+in a R markdown report.
 
 ## Loading and preprocessing the data
 
@@ -7,7 +8,10 @@
 
 ## What is mean total number of steps taken per day?
 
+Total Steps
+```{r funct_read, echo=TRUE} 
 
+```
 
 ## What is the average daily activity pattern?
 
