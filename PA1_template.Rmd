@@ -1,24 +1,52 @@
 # Reproducible Research: Peer Assessment 1
 In this assignment, the data from activity trackers is analyzed and documented
-in a R markdown report.
+in a kntr report.
 
 ## Loading and preprocessing the data
+1. The activity zip files has to be downloaded and extracted in the working directory
+2. The file contains headers and 3 columns: steps, date and interval
+3. The missing values in the steps column are indicated by an "NA" string
 
+```{r echo=TRUE} 
+df <- read.csv("activity.csv", 
+               header=TRUE, 
+               sep=",",
+               na.strings=c("NA"),
+               colClasses=c("numeric", "Date", "numeric"))
+df$interval <- factor(df$interval)
+```
+
+The examination of the data reveals, there are no additional
+step to preprocess the data are necessary.
+  
+```{r funct_read, echo=TRUE} 
+summary(df)
+head(df)
+str(df)
+```
 
 
 ## What is mean total number of steps taken per day?
 
 Total Steps
-```{r funct_read, echo=TRUE} 
+```{r echo=TRUE} 
+
+library(ggplot2)
+
+aggdf <- aggregate( df$steps, by=list(df$date), FUN=sum,na.rm=TRUE)
+names(aggdf)[1]<-paste("Date")
+names(aggdf)[2]<-paste("No_of_Steps")
+steps_mean <- round(mean(aggdf$No_of_Steps))
+steps_median <- median(aggdf$No_of_Steps)
+ggplot(aggdf, aes(x=No_of_Steps)) + 
+      geom_histogram(fill="red", binwidth=2000) +
+      geom_vline(xintercept=steps_mean, color="blue") +
+      geom_vline(xintercept=steps_median, color="green")
+
 
 ```
 
-## What is the average daily activity pattern?
+**number of steps per day:**  
+**`r paste("mean ", steps_mean, " (blue) ")`**
+**`r paste("median ", steps_median, " (green)")`**
 
-
-
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
